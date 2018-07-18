@@ -1,7 +1,7 @@
 {
   "name": "angular-template-formatter",
-  "displayName": "Angular template formatter",
-  "description": "Auto format Angular html templates",
+  "displayName": "Angular Template Formatter",
+  "description": "Auto-Format Angular HTML templates",
   "version": "0.0.9",
   "publisher": "scottmccaughey",
   "engines": {
@@ -28,21 +28,21 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Angular template formatter configuration",
+      "title": "Angular Template Formatter",
       "properties": {
         "angular-template-formatter.indentWidth": {
           "type": "number",
-          "default": 4,
-          "description": "Number of spaces to indent"
+          "default": 2,
+          "description": "Number of spaces to indent."
         },
         "angular-template-formatter.useSpaces": {
           "type": "boolean",
           "default": true,
-          "description": "Use spaces or tabs for indentation (False will ignore indentWidth)"
+          "description": "Use spaces or tabs for indentation (False will ignore indentWidth)."
         },
         "angular-template-formatter.closeTagSameLine": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Never place the closing tag '>' on a new line."
         },
         "angular-template-formatter.skipContents": {

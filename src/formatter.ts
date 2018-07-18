@@ -24,10 +24,10 @@ export class EditProvider implements DocumentFormattingEditProvider {
 			.get('useSpaces', true);
 		let indentation = workspace
 			.getConfiguration('angular-template-formatter')
-			.get<number>('indentWidth', 4);
+			.get<number>('indentWidth', 2);
 		let closeTagSameLine = workspace
 			.getConfiguration('angular-template-formatter')
-			.get('closeTagSameLine', false);
+			.get('closeTagSameLine', true);
 		let skipContents = workspace
 			.getConfiguration('angular-template-formatter')
 			.get('skipContents', [ 'p', 'li' ]);

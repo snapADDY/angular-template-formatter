@@ -1,6 +1,8 @@
-# Angular Template Formatter README
+# Angular Template Formatter
 
 Extension for formatting Angular 2+ HTML templates. This extension is opinionated and not very configurable.
+
+This extension is a fork of [Angular Template Formatter](https://marketplace.visualstudio.com/items?itemName=stringham.angular-template-formatter) that adds additional configuration options. It also changes the default value of some of the configuration options.
 
 ## Formatting:
 
@@ -27,21 +29,19 @@ will get formatted to:
 
 ```html
 <div id="search-component">
-    <h4>Hero Search</h4>
-    <input
-        #searchBox
-        id="search-box"
-        (keyup)="search(searchBox.value)"
-    >
-    <div>
-        <div
-            *ngFor="let hero of heroes | async"
-            (click)="gotoDetail(hero)"
-            class="search-result"
-        >
-            {{hero.name}}
-        </div>
+  <h4>Hero Search</h4>
+  <input
+    #searchBox
+    id="search-box"
+    (keyup)="search(searchBox.value)">
+  <div>
+    <div
+      *ngFor="let hero of heroes | async"
+      (click)="gotoDetail(hero)"
+      class="search-result">
+      {{hero.name}}
     </div>
+  </div>
 </div>
 ```
 
@@ -59,6 +59,10 @@ will get formatted to:
 
 
 ## Release Notes
+
+### 0.0.9
+
+Added option for setting certain HTML tags whose contents should be completely ignored: `angular-template-formatter.skipContents`.
 
 ### 0.0.8
 
