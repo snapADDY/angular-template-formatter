@@ -30,7 +30,7 @@ export class EditProvider implements DocumentFormattingEditProvider {
 			.get('closeTagSameLine', true);
 		let skipContents = workspace
 			.getConfiguration('angular-template-formatter')
-			.get('skipContents', [ 'p', 'li' ]);
+			.get('skipContents', [ 'p', 'li', 'span' ]);
 		try {
 			if (document.fileName.endsWith('.scala.html')) {
 				return [];

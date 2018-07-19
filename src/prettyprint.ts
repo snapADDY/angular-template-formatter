@@ -21,7 +21,7 @@ export function format(
 	indentation: number = 4,
 	useSpaces: boolean = true,
 	closeTagSameLine: boolean = false,
-	skipContents = [ 'p', 'li' ]
+	skipContents = [ 'p', 'li', 'span' ]
 ): string {
 	const rawHtmlParser = new HtmlParser();
 	const htmlParser = new I18NHtmlParser(rawHtmlParser);
@@ -94,31 +94,32 @@ export function format(
 				};
 				element.children.forEach((element) => {
 					element.visit(visitor, obj);
-					let tempArr = [];
-					for (var i = 0; i < 5; i++) {
-						let tempEl = pretty.pop();
-						if (tempEl.charAt(0) == ' ' && tempEl.charAt(1) == ' ') {
-							let matchEl = false;
-							for (var j = 0; j < skipContents.length; j++) {
-								if (tempEl.endsWith('<' + skipContents[j])) {
-									matchEl = true;
-								}
-							}
-							if (!matchEl) {
-								tempEl = tempEl.replace(/^\s+/, '');
-								let newlineEl = pretty.pop();
-								if (newlineEl !== '\n') {
-									tempArr.push(newlineEl);
-								}
-							}
-						}
-						tempArr.push(tempEl);
-					}
-					tempArr = tempArr.reverse();
-					pretty = pretty.concat(tempArr);
 				});
 				indent--;
 				pretty.push(`</${element.name}>`);
+
+				let tempArr = [];
+				let matchEl = false;
+				do {
+					let tempEl = pretty.pop();
+					for (var i = 0; i < skipContents.length; i++) {
+						if (tempEl.endsWith('<' + skipContents[i])) {
+							tempArr.push(tempEl);
+							matchEl = true;
+						}
+					}
+					if (!matchEl) {
+						if (tempEl.charAt(0) == ' ' && tempEl.charAt(1) == ' ') {
+							tempEl = tempEl.replace(/^\s+/, '');
+						}
+						if (tempEl !== '\n') {
+							tempArr.push(tempEl);
+						}
+					}
+				} while (matchEl === false);
+				tempArr = tempArr.reverse();
+				pretty = pretty.concat(tempArr);
+
 				return;
 			}
 
@@ -216,6 +217,8 @@ export function format(
 	htmlResult.rootNodes.forEach((node) => {
 		node.visit(visitor, {});
 	});
+
+	// console.log(pretty);
 
 	let joiner = pretty.join('').trim() + '\n';
 

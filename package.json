@@ -47,7 +47,7 @@
         },
         "angular-template-formatter.skipContents": {
           "type": "array",
-          "default": ["p", "li"],
+          "default": ["p", "li", "span"],
           "description": "HTML tags whose contents the formatter should ignore."
         }
       }
