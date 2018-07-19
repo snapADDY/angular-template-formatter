@@ -2,7 +2,7 @@
   "name": "angular-template-formatter",
   "displayName": "Angular Template Formatter",
   "description": "Auto-Format Angular HTML templates",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "publisher": "scottmccaughey",
   "engines": {
     "vscode": "^1.10.0"
@@ -12,12 +12,12 @@
     "url": "https://github.com/scottmccaughey/angular-template-formatter"
   },
   "categories": [
-        "Formatters"
-    ],
+    "Formatters"
+  ],
   "icon": "icon.png",
   "activationEvents": [
-        "onLanguage:html"
-    ],
+    "onLanguage:html"
+  ],
   "main": "./out/src/extension",
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
@@ -47,7 +47,11 @@
         },
         "angular-template-formatter.skipContents": {
           "type": "array",
-          "default": ["p", "li", "span"],
+          "default": [
+            "p",
+            "li",
+            "span"
+          ],
           "description": "HTML tags whose contents the formatter should ignore."
         }
       }
