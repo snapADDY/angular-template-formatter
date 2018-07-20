@@ -21,7 +21,21 @@ export function format(
 	indentation: number = 4,
 	useSpaces: boolean = true,
 	closeTagSameLine: boolean = false,
-	skipContents = [ 'p', 'li', 'span' ]
+	skipContents = [
+		'p',
+		'li',
+		'span',
+		'em',
+		'strong',
+		'i',
+		'b',
+		'h1',
+		'h2',
+		'h3',
+		'h4',
+		'h5',
+		'h6'
+	]
 ): string {
 	const rawHtmlParser = new HtmlParser();
 	const htmlParser = new I18NHtmlParser(rawHtmlParser);
@@ -97,13 +111,14 @@ export function format(
 				});
 				indent--;
 				pretty.push(`</${element.name}>`);
+				console.log(element.name);
 
 				let tempArr = [];
 				let matchEl = false;
 				do {
 					let tempEl = pretty.pop();
 					for (var i = 0; i < skipContents.length; i++) {
-						if (tempEl.endsWith('<' + skipContents[i])) {
+						if ((tempEl.endsWith('<' + skipContents[i])) && (element.name === skipContents[i])) {
 							tempArr.push(tempEl);
 							matchEl = true;
 						}
@@ -118,6 +133,7 @@ export function format(
 					}
 				} while (matchEl === false);
 				tempArr = tempArr.reverse();
+				console.log(tempArr);
 				pretty = pretty.concat(tempArr);
 
 				return;

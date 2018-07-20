@@ -50,7 +50,17 @@
           "default": [
             "p",
             "li",
-            "span"
+            "span",
+            "em",
+            "strong",
+            "i",
+            "b",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
           ],
           "description": "HTML tags whose contents the formatter should ignore."
         }

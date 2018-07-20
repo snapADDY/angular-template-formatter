@@ -60,6 +60,10 @@ will get formatted to:
 
 ## Release Notes
 
+### 0.0.11
+
+Fixing parsing issues with and adding additional default tags for `angular-template-formatter.skipContents`.
+
 ### 0.0.9
 
 Added option for setting certain HTML tags whose contents should be completely ignored: `angular-template-formatter.skipContents`.
