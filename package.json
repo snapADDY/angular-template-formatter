@@ -2,7 +2,7 @@
   "name": "angular-template-formatter",
   "displayName": "Angular Template Formatter",
   "description": "Auto-Format Angular HTML templates",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publisher": "scottmccaughey",
   "engines": {
     "vscode": "^1.10.0"
