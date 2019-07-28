@@ -3,7 +3,7 @@
   "displayName": "Angular Template Formatter",
   "description": "Auto-Format Angular HTML templates",
   "version": "0.0.11",
-  "publisher": "scottmccaughey",
+  "publisher": "alexsherekin",
   "engines": {
     "vscode": "^1.10.0"
   },
