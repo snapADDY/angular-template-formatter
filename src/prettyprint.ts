@@ -186,9 +186,9 @@ export function format(
           }
           if (!matchEl) {
             if (tempEl.charAt(0) == ' ' && tempEl.charAt(1) == ' ') {
-              tempEl = tempEl.replace(/^\s+/, '');
+              tempEl = tempEl.replace(/^\s+/, "");
             }
-            if (tempEl !== '\n') {
+            if (tempEl !== "\n") {
               tempArr.push(tempEl);
             }
           }
@@ -200,40 +200,41 @@ export function format(
         return;
       }
 
-      if (element.name.startsWith(':svg:')) {
+      if (element.name.startsWith(":svg:")) {
         pretty.push(getIndent(indent) + element.sourceSpan.toString());
         indent++;
         element.children.forEach((e) => e.visit(visitor, {}));
         indent--;
         if (element.children.length > 0) {
-          pretty.push('\n' + getIndent(indent));
-        } else if (element.sourceSpan.toString().endsWith('/>')) {
+          pretty.push("\n" + getIndent(indent));
+        } else if (element.sourceSpan.toString().endsWith("/>")) {
           return;
         }
         pretty.push(element.endSourceSpan!.toString());
         return;
       }
-      pretty.push(getIndent(indent) + '<' + element.name);
-      attrNewLines = element.attrs.length > 1 && element.name != 'link';
+      pretty.push(getIndent(indent) + "<" + element.name);
+
+      attrNewLines = element.attrs.length > 1 && element.name != "link";
       element.attrs
         .map(attr => ({ attr, weight: convertAttributeToWeight(attr) }))
         .sort(sortAttributes)
-        .forEach(weightedAttr => {
-          weightedAttr.attr.visit(visitor, {});
+        .forEach((weightedAttr, index) => {
+          const attribute = weightedAttr.attr.visit(visitor, {});
+          const prefix = (attrNewLines && index > 0) ? "\n" + getIndent(indent + 1) : " ";
+
+          pretty.push(prefix + attribute);
         });
       if (!closeTagSameLine && attrNewLines) {
-        pretty.push('\n' + getIndent(indent));
+        pretty.push("\n" + getIndent(indent));
       }
-      pretty.push('>');
+      pretty.push(">");
       indent++;
       let ctx = {
         inlineTextNode: false,
         textNodeInlined: false,
         skipFormattingChildren: skipFormattingChildren.hasOwnProperty(element.name)
       };
-      if (!attrNewLines && element.children.length == 1) {
-        ctx.inlineTextNode = true;
-      }
       element.children.forEach((element) => {
         element.visit(visitor, ctx);
       });
@@ -243,30 +244,28 @@ export function format(
         !ctx.textNodeInlined &&
         !ctx.skipFormattingChildren
       ) {
-        pretty.push('\n' + getIndent(indent));
+        pretty.push("\n" + getIndent(indent));
       }
       if (!selfClosing.hasOwnProperty(element.name)) {
         pretty.push(`</${element.name}>`);
       }
     },
     visit: function (node: Node, context: any) {
-      console.error('IF YOU SEE THIS THE PRETTY PRINTER NEEDS TO BE UPDATED');
+      console.error("IF YOU SEE THIS THE PRETTY PRINTER NEEDS TO BE UPDATED");
     },
     visitAttribute: function (attribute: Attribute, context: any) {
-      let prefix = attrNewLines ? '\n' + getIndent(indent + 1) : ' ';
-      pretty.push(prefix + attribute.name);
-      if (attribute.value.length) {
-        pretty.push(`="${attribute.value.trim()}"`);
-      }
+      const quots = '"';
+
+      return attribute.name + (attribute.value.length ? `=${quots}${attribute.value.trim()}${quots}` : '');
     },
     visitComment: function (comment: Comment, context: any) {
-      pretty.push('\n' + getIndent(indent) + '<!-- ' + comment.value.trim() + ' -->');
+      pretty.push("\n" + getIndent(indent) + "<!-- " + comment.value.trim() + " -->");
     },
     visitExpansion: function (expansion: Expansion, context: any) {
-      console.error('IF YOU SEE THIS THE PRETTY PRINTER NEEDS TO BE UPDATED');
+      console.error("IF YOU SEE THIS THE PRETTY PRINTER NEEDS TO BE UPDATED");
     },
     visitExpansionCase: function (expansionCase: ExpansionCase, context: any) {
-      console.error('IF YOU SEE THIS THE PRETTY PRINTER NEEDS TO BE UPDATED');
+      console.error("IF YOU SEE THIS THE PRETTY PRINTER NEEDS TO BE UPDATED");
     },
     visitText: function (text: Text, context: any) {
       if (context.skipFormattingChildren) {
@@ -280,15 +279,15 @@ export function format(
 
       context.textNodeInlined = shouldInline;
       if (text.value.trim().length > 0) {
-        let prefix = shouldInline ? '' : '\n' + getIndent(indent);
+        let prefix = shouldInline ? "" : "\n" + getIndent(indent);
         pretty.push(prefix + text.value.trim());
       } else if (!shouldInline) {
         pretty.push(
           text.value
-            .replace('\n', '')
-            .replace(/ /g, '')
-            .replace(/\t/g, '')
-            .replace(/\n+/, '\n')
+            .replace("\n", "")
+            .replace(/ /g, "")
+            .replace(/\t/g, "")
+            .replace(/\n+/, "\n")
         );
       }
     }
@@ -300,7 +299,7 @@ export function format(
 
   // console.log(pretty);
 
-  let joiner = pretty.join('').trim() + '\n';
+  let joiner = pretty.join("").trim() + "\n";
 
   return joiner;
 }
